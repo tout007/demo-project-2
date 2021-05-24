@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-header text-center">
+    <h2>Users</h2>
+  </div>
+  <div class="card-body text-center">
+    <% if alert.present? %>
+      <p id="alert" class="alert alert-success"> <%= alert %> </p>
+    <% end %>
+    <table class="table table-bordered" align="center">
+      <thead> 
+        <tr>
+          <th >ID</th>
+          <th >Name</th>
+          <th >City</th>
+          <th >Gender</th>
+          <th >Email</th>
+          <th >Role</th>
+          <th >Active</th>
+          <!-- <th >Block</th> -->
+          <th >Block user</th>
+        </tr>
+      </thead> 
+      <tbody>
+        <% @users.each do |user| %>
+          <tr >
+            <td><%= user.id %></td>
+            <td><%= user.name %></td>
+            <td><%= user.city %></td>
+            <td><%= user.gender %></td>
+            <td><%= user.email %></td>
+            <td><%= user.role %></td>
+            <td><%= user.active %></td>
+            <!-- <td><%= user.block %></td> -->
+            <td>
+              <% if user.block == true %>
+                <%= link_to 'No', block_user_path(user) %>  
+              <% else %> 
+                <%= link_to 'Yes', block_user_path(user) %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>  
+      </tbody>
+    </table>  
+  </div>
+</div>

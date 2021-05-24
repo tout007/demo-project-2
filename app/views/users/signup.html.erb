@@ -1,0 +1,54 @@
+<%= form_for(@user, url: users_path, method: :post) do |form| %>
+  <div id="loginform" class="login-page">
+    <div class="row">
+      <div class="col-md-6 text-section">
+        <p class="heading">Expense Manager</p>
+        <p class="description">It helps you to manage your daily expenses very easily.</p>
+      </div>
+      <div class="col-md-6 text-center">
+        <% if alert.present? %>
+          <h3 id="alert" class="alert alert-danger"><% alert %>Something went wrong!</h3>
+        <% end %>
+        <div class="form-group " >  
+          <%= form.text_field :name, placeholder: 'Name', class: 'form-control', required: 'true' %>
+          <% @user.errors.full_messages_for(:name).each do |message| %>
+            <div class="error"><%= message %></div>
+          <% end %>
+        </div>
+        <div class="form-group text-left" >  
+          <%= form.label :gender %>
+          <%= form.radio_button :gender, 'Male', class: 'text-center' %> Male
+          <%= form.radio_button :gender, 'Female' %> Female
+        </div>
+        <div class="form-group" >  
+          <%= form.text_field :city, placeholder: 'city', class: 'form-control' %>
+          <% @user.errors.full_messages_for(:city).each do |message| %>
+            <div class="error"><%= message %></div>
+          <% end %>
+        </div>
+        <div class="form-group" >  
+          <%= form.email_field :email, placeholder: 'Email', class: 'form-control', required: 'true' %>
+          <% @user.errors.full_messages_for(:email).each do |message| %>
+            <div class="error"><%= message %></div>
+          <% end %>
+        </div>
+        <div class="form-group">
+          <%= form.password_field :password, placeholder: 'Password', class: 'form-control',required: true %>
+          <% @user.errors.full_messages_for(:password).each do |message| %>
+            <div class="error"><%= message %></div>
+          <% end %>
+        </div>
+        <div class="form-group" >  
+          <%= form.file_field :image, placeholder: 'Email', class: 'form-control', required: 'true' %>
+        </div>
+        <div class="form-group" >
+          <%= form.submit "SIGN UP", class: 'btn btn-success form-control' %>
+        </div>
+        <div class="form-group" >
+          <%= link_to 'Login', login_path, class: 'btn btn-primary form-control' %> 
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

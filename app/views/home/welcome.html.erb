@@ -1,0 +1,74 @@
+<div class="wrapper">
+  <div>  
+    <% if alert.present? && (current_user.total_expense('month') == 0 ) %>
+      <h2 id="alert" class="alert alert-warning" align="center"><%alert%> You have not added any expenses at yet, please add some <%= link_to '', add_expense_expenses_path, {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window',class: 'btn btn-successs btn-lg fa fa-plus-square float-right'}%></h2> 
+    <% else %>
+      <% if(current_user.monthly_limit_cross?) %> 
+        <h3 align="center" class="alert alert-danger"> You have crossed your monthly limit </h3>
+      <% end %>
+      <div class="alert alert-warning">
+        <h3 align="center"> <%= @expense_limit %> - <%= @total_expense %> = <%= @remaining_amount %> </h3>
+        <p align="center">Expense limit - Total expense = Remaing </p>
+      </div>
+    <% end %>
+  </div>
+  <div>  
+    <h3 class="text-left"> Graphs</h3>
+    <div class="row" style="padding-top: 10px;">
+      <div id="piechart" class="col-md-5" >
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          // Load google charts
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+          // Draw the chart and set the chart values
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable(<%= @data.to_json.html_safe %> );
+            // Optional; add a title and set the width and height of the chart
+            var options = {'title':'My Average Category-Wise Expense', width: 400, height: 300};
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+          }
+        </script>
+      </div>
+      <div id="chart_div" class="col-md-7">
+        <script type="text/javascript">
+          google.charts.load('current', {packages: ['corechart', 'line']});
+          google.charts.setOnLoadCallback(drawBasic);
+          function drawBasic(){
+            var data = new google.visualization.arrayToDataTable(<%= @datewise_expenses.to_json.html_safe %>);
+            var options = {'title': 'Date wise expense', width: 500, height: 300 }
+            var chart = new google.charts.Line(document.getElementById('chart_div'));
+            chart.draw(data, google.charts.Line.convertOptions(options));
+            
+            // var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            // chart.draw(data, options);
+          }
+        </script>
+      </div>
+      <div>
+        <p class="heading text-left"> Recently added expenses</p>
+        <div class="row" style="padding-top: 0px;">
+          <% @recent_expenses && @recent_expenses.each do |expense| %>
+            <div class="card" style="margin-left: 10px;" >
+              <div class="card-header">
+                <h1>₹<%= expense.amount%></h1>
+                <h5><%= expense.category.name%> </h5>
+              </div>
+              <div class="card-body">  
+                <h6><%= expense.expended_at.strftime("%d %B %y")%></h6>
+                <span><%= expense.title%></span>
+              </div>
+            </div>
+          <% end %>
+        </div>
+  </div>
+    </div>  
+  </div>
+</div>
+<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>

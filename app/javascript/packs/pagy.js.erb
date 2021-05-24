@@ -1,0 +1,8 @@
+<%= Pagy.root.join('javascripts', 'pagy.js').read %>
+window.addEventListener("turbo:load", Pagy.init) # if using turbo-rails OR
+
+# window.addEventListener("turbolinks:load", Pagy.init) # if turbolinks OR
+# window.addEventListener("load", Pagy.init) # if using no library
+
+// to use it global
+// global.Pagy = Pagy

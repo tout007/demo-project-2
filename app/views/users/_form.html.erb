@@ -1,0 +1,40 @@
+<%= form_with(model: user) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div id="loginform" class="login-page">
+    <div class="row">
+      <div class="col-md-6 ">
+        <h1 style="color: blue; font-weight: bold;">Expense Manager</h1>
+        <p class="description">It helps you to manage your daily expenses very easily.</p>  
+      </div>
+      <div class="col-md-6 form-section">
+        <div class="form-group formPosition labelTag" >  
+          <%= form.text_field :email, placeholder: 'Email', required: 'true' %>
+        </div>
+        <div class="form-group formPosition labelTag">
+          <%= form.password_field :password, placeholder: 'Password', required: 'true' %>
+        </div>
+        <div class="shift-left" >
+          <button class='btn btn-primary'> Login </button>
+        </div>
+        <div class="formPosition form-group shift-left" >
+          <small> Forget password?</small> 
+        </div>
+        <div class="formPosition form-group shift-left" >
+          <button class='btn btn-success'> Create new account </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+

@@ -1,0 +1,31 @@
+<div class="card ">
+  <div class="card-header">   
+    <h2 class="float-left">Categories</h2>
+    <%= link_to '', add_category_categories_path, {remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'btn btn-successs fa fa-plus-square float-right'}%>
+  </div>
+  <div class="card-body text-center">  
+    <div>
+      <% if alert.present? %>
+        <p id="alert" class="alert alert-success"><%= alert %></p>
+      <% end %> 
+    </div>
+    <table class="table table-bordered" align="center">
+      <thead> 
+        <tr>
+          <th >ID</th>
+          <th >Name</th>
+          <th >Edit</th>
+          <th >Delete</th>
+        </tr>
+      </thead> 
+      <tbody id="category-list">
+        <%= render 'index' %> 
+      </tbody>
+    </table>
+  </div>  
+</div>
+<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>

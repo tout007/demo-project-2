@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+  <h1 class="navbar-brand" href="#">Expense Manager</h1>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <% if current_user.present?%> 
+        <li class="nav-item active icon-size">
+          <%= link_to '', home_welcome_path, class: 'nav-link fas fa-home' %>  
+        </li>
+        <% if current_user.admin?%> 
+          <li class="nav-item icon-size">
+            <%= link_to '', categories_path, class: 'nav-link fa fa-list' %>  
+          </li>
+          <li class="nav-item icon-size">
+            <%= link_to '', users_path, class: 'nav-link fas fa-users' %> 
+          </li>  
+        <%end%>
+        <li class="nav-item icon-size">
+          <%= link_to '', expenses_path, class: 'nav-link fa fa-inr' %>
+        </li>
+        <li class="nav-item icon-size">
+          <%= link_to '', edit_user_registration_path, class: 'nav-link fas fa-user-edit' %>
+        </li>
+        <li class="nav-item icon-size">
+          <%= link_to '', destroy_user_session_path, method: :delete, class: "nav-link fa fa-power-off" %>
+        </li> 
+      <% else %>
+        <li class="nav-item">
+          <%= link_to "Log in", new_session_path(:user), class: "nav-link"%>
+        </li> 
+        
+      <% end %>
+  </div>
+</nav>

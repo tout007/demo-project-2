@@ -1,0 +1,19 @@
+<% @expenses.each do |expense| %>
+  <tr>
+    <td><%= expense.id%></td>
+    <td><%= number_to_currency(expense.amount, unit: "₹")%></td>
+    <td><%= expense.category.name %></td>
+    <td><%= expense.expended_at.strftime("%d %B %y") %></td>
+    <td><%= expense.title%></td> 
+
+    <td><%= link_to '', edit_expense_path(expense), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fas fa-edit' }%></td>
+    <td id="remove">
+      <%= link_to '', expense_path(expense), method: :delete, data: {confirm: "Are you sure"}, class: 'fas fa-trash-alt', remote: true %></td>
+  </tr>
+<% end %>
+
+<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>

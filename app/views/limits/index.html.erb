@@ -1,0 +1,41 @@
+<div class="card">
+  <div class="card-header text-center">  
+    <h2 class="float-left">Limits</h2>
+    <%= link_to '',  add_limit_limits_path, {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window',class: 'btn btn-successs fa fa-plus-square float-right'}%>
+  </div>
+  <div class="card-body text-center">
+    <% if alert.present? %>
+      <p id="alert" class="alert alert-success"> <%= alert %> </p>
+    <% end %>
+    <% if @limit == nil %>
+      <span class="alert alert-warning">Please set your monthly limit</span> 
+    <% else %>
+      <table class="table table-bordered" align="center">
+        <thead> 
+          <tr>
+            <th>ID</th>
+            <th>Amount</th>
+            <th>Month</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead> 
+        <tbody>
+          <tr>
+            <td><%= @limit.id %></td>
+            <td><%= @limit.monthly_limit%></td>
+            <td><%= @limit.month_at%></td>
+            
+            <td><%= link_to '', edit_limit_path(@limit), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fas fa-edit' }%></td>
+            <td><%= link_to '', remove_limit_path(@limit) , method: :delete, data: {confirm: "Are you sure"}, class: 'fas fa-trash-alt' %></td> 
+          </tr>  
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>
+<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>

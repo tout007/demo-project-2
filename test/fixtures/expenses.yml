@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyText
+  amount: 1
+  user: one
+  images: MyString
+  bill_images: MyString
+  expended_at: 2021-05-20 13:14:02
+  category: one
+
+two:
+  title: MyText
+  amount: 1
+  user: two
+  images: MyString
+  bill_images: MyString
+  expended_at: 2021-05-20 13:14:02
+  category: two

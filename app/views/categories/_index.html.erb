@@ -1,0 +1,9 @@
+<% @categories.each do |category| %>
+  <tr>
+    <td><%= category.id%></td>
+    <td><%= category.name%></td>
+
+    <td><%= link_to '', edit_category_path(category),{remote: true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window', class: 'fas fa-edit'}%></td>
+    <td><%= link_to '', category_path(category), class: 'fas fa-trash-alt', method: :delete, remote: true %></td>
+  </tr>
+<% end %>
