@@ -1,19 +1,18 @@
 <div class="wrapper">
-  <div>  
-    <% if alert.present? && (current_user.total_expense('month') == 0 ) %>
-      <h2 id="alert" class="alert alert-warning" align="center"><%alert%> You have not added any expenses at yet, please add some <%= link_to '', add_expense_expenses_path, {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window',class: 'btn btn-successs btn-lg fa fa-plus-square float-right'}%></h2> 
-    <% else %>
-      <% if(current_user.monthly_limit_cross?) %> 
-        <h3 align="center" class="alert alert-danger"> You have crossed your monthly limit </h3>
+  <div class="margin-tag">  
+    <div class="limit-crossed">
+      <% if @total_expense.present? && @expense_limit.present? %>
+        <div class="alert alert-warning text-center">
+          <h3><%= @expense_limit%> - <%= @total_expense %> = <%= @expense_limit - @total_expense %></h3>
+          <span>Limit - Expenses = Remaing </span>
+        </div>
+      <% elsif @total_expense.nil? %>
+        <h2 id="alert" class="alert alert-warning" align="center"><%alert%> You have not added any expenses at yet, please add some <%= link_to '', add_expense_expenses_path, {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window',class: 'btn btn-successs btn-lg fa fa-plus-square float-right'}%></h2> 
       <% end %>
-      <div class="alert alert-warning">
-        <h3 align="center"> <%= @expense_limit %> - <%= @total_expense %> = <%= @remaining_amount %> </h3>
-        <p align="center">Expense limit - Total expense = Remaing </p>
-      </div>
-    <% end %>
+    </div>
   </div>
   <div>  
-    <h3 class="text-left"> Graphs</h3>
+    <h2 class="text-left"> Graphs</h2>
     <div class="row" style="padding-top: 10px;">
       <div id="piechart" class="col-md-5" >
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -39,31 +38,32 @@
           function drawBasic(){
             var data = new google.visualization.arrayToDataTable(<%= @datewise_expenses.to_json.html_safe %>);
             var options = {'title': 'Date wise expense', width: 500, height: 300 }
+            // to display line chart 
             var chart = new google.charts.Line(document.getElementById('chart_div'));
             chart.draw(data, google.charts.Line.convertOptions(options));
-            
+            // to display column/bar chart 
             // var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
             // chart.draw(data, options);
           }
         </script>
       </div>
-      <div>
-        <p class="heading text-left"> Recently added expenses</p>
+      <div class="margin-tag">
+        <h2 class="text-left"> Recently added expenses</h2>
         <div class="row" style="padding-top: 0px;">
           <% @recent_expenses && @recent_expenses.each do |expense| %>
             <div class="card" style="margin-left: 10px;" >
               <div class="card-header">
-                <h1>₹<%= expense.amount%></h1>
-                <h5><%= expense.category.name%> </h5>
+                <h4><%= number_to_currency(expense.amount, unit: "₹")%></h4>
+                <h6><%= expense.category.name%> </h6>
               </div>
               <div class="card-body">  
-                <h6><%= expense.expended_at.strftime("%d %B %y")%></h6>
-                <span><%= expense.title%></span>
+                <span><%= expense.expended_at.strftime("%d %B %y")%></span>
+                <p><%= expense.title%></p>
               </div>
             </div>
           <% end %>
         </div>
-  </div>
+      </div>
     </div>  
   </div>
 </div>
