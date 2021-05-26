@@ -19,7 +19,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     if @user.save
       render json: @user
     else
-      render error: {error: 'Unble to create User'}, status: 400
+      render error: {error: 'Unble to create user'}, status: 400
     end
   end 
   
@@ -29,7 +29,16 @@ class Api::V1::UsersController < Api::V1::BaseController
       @user.update(user_params)
       render json: {message: ' Successfully updated'}, status: 200
     else
-      render json: {error: 'Failed'}, status: 400
+      render json: {error: 'Unble to update user'}, status: 400
+    end
+  end
+
+  def destroy
+    if @user
+      @user.destroy
+      render json: {message: 'Successfully deleted'}, status: 200
+    else
+      render json: {error: 'Unble to destroy user'}
     end
   end
 

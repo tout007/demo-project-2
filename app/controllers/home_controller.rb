@@ -4,7 +4,6 @@ class HomeController < ApplicationController
   end
 
   def welcome
-    # To get category wise expenses
     if(!current_user.expenses.present?)
       flash.now[:alert] = "No Expenses at yet"
     else 
@@ -16,7 +15,7 @@ class HomeController < ApplicationController
       head = ['Date', 'Amount'] 
       @datewise_expenses = [head] + datewise_expense
   
-      # TO get sum of current user monthly expense
+      # TO get sum of monthly expense of current user 
       @total_expense = current_user.total_expense('month').to_i
       @expense_limit = current_user.limit&.monthly_limit.to_i
       

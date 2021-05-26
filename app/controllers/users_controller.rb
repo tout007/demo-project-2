@@ -6,17 +6,14 @@ class UsersController < ApplicationController
   
   before_action :check_signed_in, only: [:signup]
   
-  # before_action :user_auth!, only:[:edit_profile, :update_profile, :destroy, :index]
-
   def index
-    @users = User.all
+    @pagy, @users = pagy(User.all,  items: 2)
   end
 
   def edit_profile
   end
 
   def update_profile
-    # @current_user.image.attached?
     if current_user.update(update_user_params)
       redirect_to edit_profile_users_path,
       alert: 'Profile updated successfully'

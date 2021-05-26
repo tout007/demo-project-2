@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   
   before_action :configure_permitted_parameters, if: :devise_controller?
+  rescue_from Pagy::OverflowError, with: :redirect_to_last_page
+  
   # stop redirect user to welcome_home page if user is admin
   def user_admin?
     unless current_user.present? && current_user.admin?
@@ -24,12 +26,8 @@ class ApplicationController < ActionController::Base
   protected
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :email, :password, :gender, :city)}
-
-      # devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :email, :password, :current_password)}
     end
   
-  rescue_from Pagy::OverflowError, with: :redirect_to_last_page
-
   private
     def redirect_to_last_page(exception)
       redirect_to url_for(page: exception.pagy.last), notice: "Page ##{params[:page]} is overflowing. Showing page #{exception.pagy.last} instead."

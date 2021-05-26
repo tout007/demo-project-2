@@ -29,7 +29,6 @@ Rails.application.routes.draw do
   
   get '/admins/home', to:'admins#home'
   
-  # resources :sessions, :only => [:login, :create, :destroy]
   resources :admins
   
   resources :categories do
@@ -44,31 +43,21 @@ Rails.application.routes.draw do
 
   get 'home/welcome'
   resources :users do 
-    # collection do 
-    #   get :edit_profile
-    #   put :update_profile
-    #   get :logout        
-    #   delete :destroy
-    # end
     member do     
       get :block
     end
   end 
-
+  
   namespace :api do
     namespace :v1 do
       resources :users do
         resources :facts
+        resources :expenses
+        resources :categories
+        resources :limits
       end
     end
   end
 
 end
-  #devise_scope :user do
-  #  get 'sign_in', to: 'devise/sessions#new'
-  # end
-
-  # devise_for :users, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
-
-  # devise_for :users, controllers: { sessions: 'users/sessions' }
  

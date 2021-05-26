@@ -1,6 +1,6 @@
-class Api::V1::FactsController < ApplicationController
+class Api::V1::FactsController < Api::V1::BaseController
   
-  before_action :find_fact, only: [:show, :update, :destroy]
+   before_action :find_fact, only: [:show, :update,:destroy]
 
   #Get/users
   def index
@@ -8,9 +8,8 @@ class Api::V1::FactsController < ApplicationController
     render json: @facts, status: 200
   end
 
-  #GET user by id
+  #GET fact by id
   def show
-    @fact = Fact.find(params[:id])
     render json: @fact
   end
   
@@ -20,27 +19,36 @@ class Api::V1::FactsController < ApplicationController
     if @fact.save
       render json: @fact
     else
-      render error: {error: 'Unble to create Fact'}, status: 400
+      render error: {error: 'Unble to create fact'}, status: 400
     end
   end 
   
   def update
-    @fact = Fact.find(params[:id])
     if @fact
       @fact.update(fact_params)
       render json: {message: ' Successfully updated'}, status: 200
     else
-      render json: {error: 'Failed'}, status: 400
+      render json: {error: 'Unble to update fact'}, status: 400
+    end
+  end
+
+  def destroy
+    if @fact
+      @fact.destroy
+      render json: {message: 'Successfully deleted'}, status: 200
+    else
+      render json: {error: 'Unble to destroy fact'}
     end
   end
 
   private
-    def find_find
+    def find_fact
       @fact = Fact.find(params[:id])  
     end
 
     def fact_params
-      params.require(:fact).permit(:fact, :likes, :user_id)
+      # params.require(:fact).permit(:likes, :fact, :user_id)
+      params.permit(:fact, :likes, :user_id)
     end
 
 end

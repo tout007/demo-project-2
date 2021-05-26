@@ -11,7 +11,7 @@
       <% end %>
     </div>
     <div class="form-group text-center">  
-      <%= form.select :month_at, options_for_select(Date::MONTHNAMES.slice(1,12)),{ include_blank: 'Select Month' }, class: 'form-control'%>
+      <%= form.select(:month_at, Date::MONTHNAMES.slice(1,12), { include_blank: 'Select Month' }, class: 'form-control') %>
     </div>
     <div class="form-group" >  
       <%= form.text_field :monthly_limit, placeholder: 'Add monthly limit', class: 'form-control', required: 'true' %>
