@@ -1,15 +1,12 @@
 class Api::V1::CategoriesController < Api::V1::BaseController
   
-  before_action :user_admin?
+  before_action :admin?
   before_action :find_category, only:[:show, :update, :destroy]
+  before_action :authenticate
 
   def index
     @categories = Category.all
-    if current_user.admin?
-      render json: @categories
-    else
-      render error: {error: 'Non Admin User'}, status: 400 
-    end
+    render json: @categories
   end
 
   def show
@@ -51,4 +48,5 @@ class Api::V1::CategoriesController < Api::V1::BaseController
     def category_params
       params.permit(:name)
     end
+   
 end

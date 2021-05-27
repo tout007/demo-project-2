@@ -1,6 +1,7 @@
 class Api::V1::LimitsController < Api::V1::BaseController
   
   before_action :find_limit, only:[:show, :update, :destroy]
+  before_action :authenticate
 
   def index
     @limit = current_user.limit

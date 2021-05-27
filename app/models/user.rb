@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   before_create :generate_token
 
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, 
          :recoverable, :rememberable, :validatable
 
   has_one :limit
@@ -62,13 +62,14 @@ class User < ApplicationRecord
   end   
 
   # protected
-    def generate_token
-      self.token = loop do
-        random_token = SecureRandom.urlsafe_base64(nil, false)
-        break random_token unless User.exists?(token: random_token)
-      end
-      save
+   
+  def generate_token
+    self.token = loop do
+      random_token = SecureRandom.urlsafe_base64(nil, false)
+      break random_token unless User.exists?(token: random_token)
     end
+  end
+end
 
    # def set_auth_token
    #    return if auth_token.present?
@@ -78,4 +79,3 @@ class User < ApplicationRecord
    #  def generate_auth_token
    #    SecureRandom.uuid.gsub(/\-/,'')
    #  end
-end

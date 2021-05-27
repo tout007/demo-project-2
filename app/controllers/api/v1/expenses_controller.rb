@@ -1,6 +1,7 @@
 class Api::V1::ExpensesController < Api::V1::BaseController
     
   before_action :find_expense, only: [:show, :destroy, :update]
+  before_action :authenticate
 
   def index
     @expenses = current_user.expenses
@@ -10,7 +11,7 @@ class Api::V1::ExpensesController < Api::V1::BaseController
   def create
     @expense = Expense.new(expense_params)
     if @expense.save
-      render json: @expense
+      render json: @expense, status: 200
     else
       render error: {error: 'Failed to add an expense'}, status: 400 
       # Bad Request (invalid request message)
@@ -29,7 +30,7 @@ class Api::V1::ExpensesController < Api::V1::BaseController
   def update
     if @expense
       @expense.update(expense_params)
-      render json: @expense
+      render json: @expense,  status: 200
     else
       render error: {error: 'Failed to update an expense'}, status: 400 
     end

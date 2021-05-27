@@ -50,12 +50,11 @@ Rails.application.routes.draw do
   
   namespace :api do
     namespace :v1 do
-      resources :users do
-        resources :facts
-        resources :expenses
-        resources :categories
-        resources :limits
-      end
+      resources :expenses
+      resources :categories
+      resources :users
+      resources :limits
+      resources :facts
     end
   end
 

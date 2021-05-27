@@ -2,6 +2,7 @@ class Api::V1::BaseController < ApplicationController
   
   skip_before_action :verify_authenticity_token
   before_action :authenticate
+   
   # before_filter :verify_authenticity_token, only: [:create, :index]
 
   protected
@@ -14,4 +15,10 @@ class Api::V1::BaseController < ApplicationController
         return render json: {}, status: 401
       end
     end
+
+    def admin?
+      unless current_user.present? && current_user.admin?
+        return render json: {error: "UnAuthorized User"}, status: 401 
+      end    
+  end
 end
