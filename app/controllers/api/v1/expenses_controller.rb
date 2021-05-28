@@ -1,15 +1,13 @@
 class Api::V1::ExpensesController < Api::V1::BaseController
     
   before_action :find_expense, only: [:show, :destroy, :update]
-  before_action :authenticate
 
   def index
-    @expenses = current_user.expenses
-    render json: @expenses, status: 200 # OK
+    render json: UserSerializer.new(current_user).serializable_hash
   end
 
   def create
-    @expense = Expense.new(expense_params)
+    @expense = current_user.expenses.new(expense_params)
     if @expense.save
       render json: @expense, status: 200
     else
@@ -37,7 +35,7 @@ class Api::V1::ExpensesController < Api::V1::BaseController
   end
 
   def show
-    render json: @expense
+    render json: ExpenseSerializer.new(@expense).to_json #.serializable_hash
   end
 
   private

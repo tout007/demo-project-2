@@ -13,7 +13,7 @@ class Api::V1::LimitsController < Api::V1::BaseController
   end
 
   def create
-    @limit = Limit.new(limit_params)
+    @limit = current_user.limit.new(limit_params)
     if @limit.save
       render json: @limit 
     else

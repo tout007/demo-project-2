@@ -1,6 +1,7 @@
 class Api::V1::UsersController < Api::V1::BaseController
 require 'securerandom'
 
+  
   before_action :find_user, only:[:destroy, :show, :update] 
   before_action :admin?, only:[:index, :destroy]
   before_action :authenticate, only: [:update, :show, :destroy]

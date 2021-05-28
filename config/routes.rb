@@ -55,8 +55,11 @@ Rails.application.routes.draw do
       resources :users
       resources :limits
       resources :facts
+      post 'authenticate', to: 'authentication#authenticate'
+      post 'signup', to: 'authentication#signup'
     end
   end
+
 
 end
  
