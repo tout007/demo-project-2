@@ -2,9 +2,12 @@ class ApplicationController < ActionController::Base
   
   include Pagy::Backend
   protect_from_forgery
-  
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from Pagy::OverflowError, with: :redirect_to_last_page
+
+  serialization_scope :view_context
+  # serialization_scope :current_user
   
   # stop redirect user to welcome_home page if user is admin
   def user_admin?

@@ -35,7 +35,23 @@ class Api::V1::ExpensesController < Api::V1::BaseController
   end
 
   def show
-    render json: ExpenseSerializer.new(@expense).to_json #.serializable_hash
+    render json: ExpenseSerializer.new(@expense).serializable_hash
+  end
+
+  def categories_graph
+    # render json: CategorySerializer.new(current_user).serializable_hash
+    expense = current_user.sum_of_category_expense
+    title = ['Category', 'Amount']
+    @data = [title] + expense
+    render json: @data
+  end
+
+  def line_graph
+    # render json: current_user.monthly_expenses.to_json
+    datewise_expense = current_user.monthly_expenses
+    head = ['Date', 'Amount'] 
+    @datewise_expenses = [head] + datewise_expense
+    render json: @datewise_expenses
   end
 
   private

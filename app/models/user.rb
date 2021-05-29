@@ -57,6 +57,11 @@ class User < ApplicationRecord
     expenses.group(:category).sum(:amount).to_a.map { |x| [ x[0].name, x[1] ] }
   end
 
+  # To get list of monthly expenses 
+  def monthly_expenses
+    expenses.group(:expended_at).sum(:amount).to_a.map{ |k,v| [ k.strftime('%v'), v ] }
+  end
+
   # send email to user at signup first time
   def send_email_to_signup!
     SignupMailer.with(user: self).signup_email.deliver_now  
@@ -72,11 +77,11 @@ class User < ApplicationRecord
   end
 end
 
-   # def set_auth_token
-   #    return if auth_token.present?
-   #    self.auth_token = generate_auth_token
-   #  end
+  # def set_auth_token
+  #    return if auth_token.present?
+  #    self.auth_token = generate_auth_token
+  #  end
 
-   #  def generate_auth_token
-   #    SecureRandom.uuid.gsub(/\-/,'')
-   #  end
+  #  def generate_auth_token
+  #    SecureRandom.uuid.gsub(/\-/,'')
+  #  end

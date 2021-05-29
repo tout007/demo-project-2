@@ -11,7 +11,7 @@ class HomeController < ApplicationController
       title = ['Category', 'Amount']
       @data = [title] + expense
      
-      datewise_expense = current_user.expenses.group(:expended_at).sum(:amount).to_a.map{ |k,v| [ k.strftime('%v'), v ] }
+      datewise_expense = current_user.monthly_expenses
       head = ['Date', 'Amount'] 
       @datewise_expenses = [head] + datewise_expense
   

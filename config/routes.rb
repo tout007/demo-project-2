@@ -55,6 +55,10 @@ Rails.application.routes.draw do
       resources :users
       resources :limits
       resources :facts
+      
+      get 'categories_graph', to: 'expenses#categories_graph'
+      get 'line_graph', to: 'expenses#line_graph'
+      
       post 'authenticate', to: 'authentication#authenticate'
       post 'signup', to: 'authentication#signup'
     end
